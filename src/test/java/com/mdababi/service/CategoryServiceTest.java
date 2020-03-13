@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.mdababi.api.mapper.CategoryMapper;
-import com.mdababi.api.model.CategoryDTO;
+import com.mdababi.api.v1.mapper.CategoryMapper;
+import com.mdababi.api.v1.model.CategoryDTO;
 import com.mdababi.domain.Category;
 import com.mdababi.repositories.CategoryRepository;
 

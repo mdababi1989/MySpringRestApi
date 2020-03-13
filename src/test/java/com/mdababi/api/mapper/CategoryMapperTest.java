@@ -4,7 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import com.mdababi.api.model.CategoryDTO;
+import com.mdababi.api.v1.mapper.CategoryMapper;
+import com.mdababi.api.v1.model.CategoryDTO;
 import com.mdababi.domain.Category;
 
 class CategoryMapperTest {

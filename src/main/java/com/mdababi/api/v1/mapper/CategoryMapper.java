@@ -1,10 +1,10 @@
-package com.mdababi.api.mapper;
+package com.mdababi.api.v1.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-import com.mdababi.api.model.CategoryDTO;
+import com.mdababi.api.v1.model.CategoryDTO;
 import com.mdababi.domain.Category;
 
 @Mapper

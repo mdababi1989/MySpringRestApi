@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.mdababi.api.mapper.CategoryMapper;
-import com.mdababi.api.model.CategoryDTO;
+import com.mdababi.api.v1.mapper.CategoryMapper;
+import com.mdababi.api.v1.model.CategoryDTO;
 import com.mdababi.repositories.CategoryRepository;
 
 @Service
