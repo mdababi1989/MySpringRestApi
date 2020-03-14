@@ -29,7 +29,7 @@ public class CustomerController {
 	}
 
 	@GetMapping("{name}")
-	public ResponseEntity<CustomerDTO> getByNameCategories(@PathVariable String name) {
+	public ResponseEntity<CustomerDTO> getByLastNameCategories(@PathVariable String name) {
 		return new ResponseEntity<CustomerDTO>(customerService.getByLastName(name), HttpStatus.OK);
 	}
 
