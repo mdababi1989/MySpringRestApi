@@ -10,7 +10,7 @@ import com.mdababi.domain.Customer;
 @Mapper
 public interface CustomerMapper {
 	CustomerMapper INSTANCE = Mappers.getMapper(CustomerMapper.class);
-	@Mapping(source ="id", target = "id")
+
 	CustomerDTO CustomerToCustomerDTO(Customer customer);
 	
 }

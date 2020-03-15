@@ -11,6 +11,8 @@ import com.mdababi.api.v1.model.CustomerDTO;
 import com.mdababi.api.v1.model.CustomerListDTO;
 import com.mdababi.service.CustomerService;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/api/v1/customers/")
 public class CustomerController {
@@ -23,14 +25,14 @@ public class CustomerController {
 	}
 
 	@GetMapping
-	public ResponseEntity<CustomerListDTO> listCategories() {
+	public ResponseEntity<CustomerListDTO> listCustomers() {
 		return new ResponseEntity<CustomerListDTO>(new CustomerListDTO(customerService.getAllCustomers()),
 				HttpStatus.OK);
 	}
 
-	@GetMapping("{name}")
-	public ResponseEntity<CustomerDTO> getByLastNameCategories(@PathVariable String name) {
-		return new ResponseEntity<CustomerDTO>(customerService.getByLastName(name), HttpStatus.OK);
+	@GetMapping("{id}")
+	public ResponseEntity<CustomerDTO> getByIdCustomers(@PathVariable Long id) {
+		return new ResponseEntity<CustomerDTO>(customerService.getById(id), HttpStatus.OK);
 	}
 
 }

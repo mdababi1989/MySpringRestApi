@@ -20,7 +20,6 @@ class CustomerMapperTest {
 	void testCustomerToCustomerDTO() {
 		Customer mohamed = Customer.builder().id(1L).firstName("Mohamed").lastName("Dababi").build();
 		CustomerDTO customerDTO = customerMapper.CustomerToCustomerDTO(mohamed);
-		assertEquals(Long.valueOf(1L), customerDTO.getId());
 		assertEquals("Mohamed", customerDTO.getFirstName());
 		assertEquals("Dababi", customerDTO.getLastName());
 	}

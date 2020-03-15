@@ -1,11 +1,13 @@
 package com.mdababi.service;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.anyString;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,13 +41,12 @@ class CustomerServiceTest {
 	}
 
 	@Test
-	void testGetByLastName() {
+	void testGetById() {
 		Customer mohamed = Customer.builder().id(1L).firstName("Mohamed").lastName("Dababi").build();
-		when(customerRepository.getByLastName(anyString())).thenReturn(mohamed);
-		
-		assertEquals(1L, mohamed.getId());
-		assertEquals("Mohamed", mohamed.getFirstName());
-		assertEquals("Dababi", mohamed.getLastName());
+		when(customerRepository.findById(any())).thenReturn(Optional.of(mohamed));
+		CustomerDTO customerDTO = customerService.getById(1L);
+		assertEquals("Mohamed", customerDTO.getFirstName());
+		assertEquals("Dababi", customerDTO.getLastName());
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.mdababi.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,13 +23,16 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public List<CustomerDTO> getAllCustomers() {
-		return customerRepository.findAll().stream().map(customerMapper::CustomerToCustomerDTO)
-				.collect(Collectors.toList());
+		return customerRepository.findAll().stream().map(customer -> {
+			CustomerDTO customerDTO = customerMapper.CustomerToCustomerDTO(customer);
+			customerDTO.setCustomer_url("/api/v1/customers/"+customer.getId());
+			return customerDTO;
+		}).collect(Collectors.toList());
 	}
 
 	@Override
-	public CustomerDTO getByLastName(String name) {
-		return customerMapper.CustomerToCustomerDTO(customerRepository.getByLastName(name));
+	public CustomerDTO getById(Long id) {
+		return customerRepository.findById(id).map(customerMapper::CustomerToCustomerDTO).orElseThrow(RuntimeException::new);
 	}
 
 }

@@ -6,6 +6,4 @@ import com.mdababi.domain.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long>{
 
-	Customer getByLastName(String name);
-
 }

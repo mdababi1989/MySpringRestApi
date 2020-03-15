@@ -2,9 +2,11 @@ package com.mdababi.controllers.v1;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -24,11 +26,10 @@ import com.mdababi.api.v1.model.CustomerDTO;
 import com.mdababi.service.CustomerService;
 
 class CustomerControllerTest {
-	@InjectMocks
-	private CustomerController customerController;
 	@Mock
 	private CustomerService customerService;
-
+	@InjectMocks
+	private CustomerController customerController;
 	MockMvc mockMvc;
 
 	@BeforeEach
@@ -38,20 +39,23 @@ class CustomerControllerTest {
 	}
 
 	@Test
-	void testListCategories() throws Exception {
-		List<CustomerDTO> customers = Arrays.asList(new CustomerDTO(), new CustomerDTO(), new CustomerDTO());
+	void testListCustomers() throws Exception {
+		CustomerDTO customerDTO1 = CustomerDTO.builder().firstName("test1").lastName("test1").build();
+		CustomerDTO customerDTO2 = CustomerDTO.builder().firstName("test2").lastName("test2").build();
+		CustomerDTO customerDTO3 = CustomerDTO.builder().firstName("test3").lastName("test3").build();
+
+		List<CustomerDTO> customers = Arrays.asList(customerDTO1, customerDTO2, customerDTO3);
 		when(customerService.getAllCustomers()).thenReturn(customers);
 		mockMvc.perform(get("/api/v1/customers/").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 				.andExpect(jsonPath("$.customers", hasSize(3)));
 	}
 
 	@Test
-	void testGetByLastNameCategories() throws Exception {
-		CustomerDTO customer = CustomerDTO.builder().id(1L).firstName("Mohamed").lastName("Dababi").build();
-		when(customerService.getByLastName(anyString())).thenReturn(customer);
-		mockMvc.perform(get("/api/v1/customers/Dababi").contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk()).andExpect(jsonPath("$.name", equalTo("Dababi")));
-
+	void testGetByIdCustomers() throws Exception {
+		CustomerDTO customer = CustomerDTO.builder().firstName("Mohamed").lastName("Dababi").customer_url("/api/v1/customers/1").build();
+		when(customerService.getById(any())).thenReturn(customer);
+		mockMvc.perform(get("/api/v1/customers/1").contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk()).andExpect(jsonPath("$.lastName", equalTo("Dababi")));
 	}
 
 }

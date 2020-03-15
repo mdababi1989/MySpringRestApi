@@ -6,7 +6,5 @@ import com.mdababi.api.v1.model.CustomerDTO;
 
 public interface CustomerService {
 	List<CustomerDTO> getAllCustomers();
-
-	CustomerDTO getByLastName(String name);
-
+	CustomerDTO getById(Long id);
 }
