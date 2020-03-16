@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Arrays;
 import java.util.List;
 
+import com.mdababi.service.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -36,7 +37,7 @@ class CategoryControllerTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		mockMvc = MockMvcBuilders.standaloneSetup(categoryController).build();
+		mockMvc = MockMvcBuilders.standaloneSetup(categoryController).setControllerAdvice(new RestResponseEntityExceptionHandler()).build();
 	}
 
 	@Test
@@ -47,7 +48,7 @@ class CategoryControllerTest {
 
 		when(categoryService.getAllCategories()).thenReturn(categories);
 
-		mockMvc.perform(get("/api/v1/categories/").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+		mockMvc.perform(get(CategoryController.BASE_URL).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 				.andExpect(jsonPath("$.categories", hasSize(2)));
 	}
 
@@ -55,8 +56,14 @@ class CategoryControllerTest {
 	void testGetByNameCategories() throws Exception {
 		CategoryDTO category1 = CategoryDTO.builder().id(1L).name(NAME).build();
 		when(categoryService.getCategoryByName(anyString())).thenReturn(category1);
-		mockMvc.perform(get("/api/v1/categories/Jim").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+		mockMvc.perform(get(CategoryController.BASE_URL + NAME).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 				.andExpect(jsonPath("$.name", equalTo(NAME)));
+	}
+
+	@Test
+	void testGetByNameNotFound() throws Exception {
+		when(categoryService.getCategoryByName(anyString())).thenThrow(ResourceNotFoundException.class);
+		mockMvc.perform(get(CategoryController.BASE_URL + "Test").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNotFound());
 	}
 
 }
