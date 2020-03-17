@@ -1,5 +1,7 @@
 package com.mdababi.bootstrap;
 
+import com.mdababi.domain.Vendor;
+import com.mdababi.repositories.VendorRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -14,17 +16,36 @@ public class Bootstrap implements CommandLineRunner {
 
 	private CategoryRepository categoryRepository;
 	private CustomerRepository customerRepository;
+	private VendorRepository vendorRepository;
+
 	
-	public Bootstrap(CategoryRepository categoryRepository, CustomerRepository customerRepository) {
+	public Bootstrap(CategoryRepository categoryRepository, CustomerRepository customerRepository, VendorRepository vendorRepository) {
 		super();
 		this.categoryRepository = categoryRepository;
 		this.customerRepository = customerRepository;
+		this.vendorRepository = vendorRepository;
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
 		loadCategories();
 		loadCustomers();
+		loadVendors();
+	}
+
+	private void loadVendors() {
+		Vendor western = Vendor.builder().name("Western Tasty Fruits Ltd.").build();
+		Vendor exotic = Vendor.builder().name("Exotic Fruits Company").build();
+		Vendor home = Vendor.builder().name("Home Fruits").build();
+		Vendor fun = Vendor.builder().name("Fun Fresh Fruits Ltd.").build();
+		Vendor nuts = Vendor.builder().name("Nuts for Nuts Company").build();
+
+		vendorRepository.save(western);
+		vendorRepository.save(exotic);
+		vendorRepository.save(home);
+		vendorRepository.save(fun);
+		vendorRepository.save(nuts);
+		System.out.println("Vendor Loaded = " + vendorRepository.count());
 	}
 
 	private void loadCustomers() {

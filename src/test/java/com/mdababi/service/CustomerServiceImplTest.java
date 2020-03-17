@@ -6,6 +6,7 @@ import com.mdababi.bootstrap.Bootstrap;
 import com.mdababi.domain.Customer;
 import com.mdababi.repositories.CategoryRepository;
 import com.mdababi.repositories.CustomerRepository;
+import com.mdababi.repositories.VendorRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -29,6 +30,8 @@ class CustomerServiceImplTest {
 
     @Autowired
     CategoryRepository categoryRepository;
+    @Autowired
+    VendorRepository vendorRepository;
 
     CustomerService customerService;
 
@@ -37,7 +40,7 @@ class CustomerServiceImplTest {
     void setUp() throws Exception {
         System.out.println("Loading customer Data");
         System.out.println(customerRepository.findAll().size());
-        Bootstrap bootstrap = new Bootstrap(categoryRepository, customerRepository);
+        Bootstrap bootstrap = new Bootstrap(categoryRepository, customerRepository, vendorRepository);
         bootstrap.run();
         customerService = new CustomerServiceImpl(customerRepository, CustomerMapper.INSTANCE);
     }
