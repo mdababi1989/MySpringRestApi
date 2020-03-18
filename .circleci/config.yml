@@ -13,7 +13,6 @@ jobs:
             - v1-dependencies-
             - v1-dependencies-
       - run: mvn test
-      - run: "mvn cobertura:cobertura"
       - run: "bash <(curl -s https://codecov.io/bash)"
       - save_cache:
           paths:
