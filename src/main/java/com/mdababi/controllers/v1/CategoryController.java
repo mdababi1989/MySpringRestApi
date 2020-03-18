@@ -1,6 +1,8 @@
 package com.mdababi.controllers.v1;
 
 import com.mdababi.api.v1.model.CustomerDTO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,7 @@ public static final String BASE_URL = "/api/v1/categories/";
 		this.categoryService = categoryService;
 	}
 
+	@ApiOperation(value = "Lists all the product categories")
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
 	public CategoryListDTO listCategories() {
